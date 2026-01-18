@@ -107,12 +107,12 @@
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 6000);
     }
-    setInterval(createHeart, 400);
+    let heartInterval = setInterval(createHeart, 400);
   </script>
 
   <!-- PAGE 1 -->
   <div id="page1" class="page active">
-    <h1>Happy Valentine’s Day My loviee😘❤️</h1>
+    <h1>Happy Valentine’s Day ❤️</h1>
     <p>
       Falcon, from the moment you entered my life, everything became softer, warmer, and brighter.
     </p>
@@ -132,7 +132,7 @@
   <div id="page3" class="page">
     <h1>One Question 🥺</h1>
     <p>
-      Falcon, will you be my Valentine?
+      Falcon, will you be my Valentine today, tomorrow, and forever?
     </p>
     <button onclick="goToPage('yesPage')">Yes 💘</button>
     <button onclick="goToPage('noPage')">No 🙈</button>
@@ -160,7 +160,48 @@
     function goToPage(pageId) {
       const pages = document.querySelectorAll('.page');
       pages.forEach(page => page.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
+      const nextPage = document.getElementById(pageId);
+      nextPage.classList.add('active');
+
+      // MAGIC YES EFFECT
+      if(pageId === 'yesPage') {
+        increaseHearts();
+        musicBoost();
+        sparkles();
+      }
+    }
+
+    // Increase heart frequency
+    function increaseHearts() {
+      clearInterval(heartInterval);
+      heartInterval = setInterval(createHeart, 150); // faster hearts
+      setTimeout(() => { 
+        clearInterval(heartInterval);
+        heartInterval = setInterval(createHeart, 400);
+      }, 10000);
+    }
+
+    // Boost music temporarily
+    function musicBoost() {
+      const audio = document.getElementById('bgMusic');
+      audio.volume = 1; // max volume for 5s
+      setTimeout(() => { audio.volume = 0.5; }, 5000);
+    }
+
+    // Sparkle animation
+    function sparkles() {
+      for(let i=0; i<50; i++){
+        const sparkle = document.createElement("div");
+        sparkle.innerHTML = "✨";
+        sparkle.style.position = "fixed";
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.top = Math.random() * 100 + "vh";
+        sparkle.style.fontSize = (Math.random()*6 + 4) + "vw";
+        sparkle.style.opacity = 0.8;
+        sparkle.style.zIndex = 3;
+        document.body.appendChild(sparkle);
+        setTimeout(()=> sparkle.remove(), 4000);
+      }
     }
   </script>
 
