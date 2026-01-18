@@ -3,51 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <title>My Love</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <style>
-    body {
+    /* FULL SCREEN & CENTERED */
+    html, body {
       margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background-color: #ffd6e8; /* light pink */
       font-family: Arial, sans-serif;
-      text-align: center;
-      height: 100vh;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
+      text-align: center;
+      position: relative;
     }
 
+    /* PAGE STYLING */
     .page {
       display: none;
+      width: 100%;
       padding: 20px;
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.8s ease-in-out;
+      opacity: 0;
       z-index: 2;
     }
 
     .active {
       display: block;
+      opacity: 1;
     }
 
+    /* TEXT COLORS */
     h1 {
       color: #8b0035; /* dark pink */
       font-weight: bold;
       margin-bottom: 20px;
+      font-size: 6vw; /* responsive heading */
     }
 
     p {
       color: #ff4f9a; /* pink */
-      font-size: 18px;
+      font-size: 4vw; /* responsive paragraph */
       margin-bottom: 25px;
+      line-height: 1.4;
     }
 
+    /* BUTTONS */
     button {
       background-color: #ff85b3;
       color: white;
       border: none;
       padding: 12px 24px;
       margin: 10px;
-      font-size: 16px;
+      font-size: 4vw;
       border-radius: 25px;
       cursor: pointer;
     }
@@ -60,7 +75,7 @@
     .heart {
       position: fixed;
       bottom: -20px;
-      font-size: 20px;
+      font-size: 6vw;
       color: #ff5c9d;
       animation: floatUp 6s linear infinite;
       opacity: 0.8;
@@ -68,21 +83,20 @@
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.9;
-      }
-      100% {
-        transform: translateY(-110vh) scale(1.5);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 0.9; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- HEARTS -->
+  <!-- BACKGROUND MUSIC -->
+  <audio autoplay loop id="bgMusic">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4d90d8a0e2.mp3?filename=romantic-piano-11059.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- HEARTS SCRIPT -->
   <script>
     function createHeart() {
       const heart = document.createElement("div");
@@ -91,21 +105,16 @@
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = (4 + Math.random() * 3) + "s";
       document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
+      setTimeout(() => heart.remove(), 6000);
     }
-
     setInterval(createHeart, 400);
   </script>
 
   <!-- PAGE 1 -->
   <div id="page1" class="page active">
-    <h1>Happy Valentine’s Day ❤️</h1>
+    <h1>Happy Valentine’s Day My loviee😘❤️</h1>
     <p>
-      Falcon, from the moment you entered my life,  
-      everything became softer, warmer, and brighter.
+      Falcon, from the moment you entered my life, everything became softer, warmer, and brighter.
     </p>
     <button onclick="goToPage('page2')">Next 💕</button>
   </div>
@@ -114,8 +123,7 @@
   <div id="page2" class="page">
     <h1>My Love 💖</h1>
     <p>
-      Falcon, you are my smile on hard days,  
-      my calm in chaos, and my favorite person always.
+      Falcon, you are my smile on hard days, my calm in chaos, and my favorite person always.
     </p>
     <button onclick="goToPage('page3')">Continue 💗</button>
   </div>
@@ -124,7 +132,7 @@
   <div id="page3" class="page">
     <h1>One Question 🥺</h1>
     <p>
-      Falcon, will you be my Valentine today, tomorrow, and forever?
+      Falcon, will you be my Valentine?
     </p>
     <button onclick="goToPage('yesPage')">Yes 💘</button>
     <button onclick="goToPage('noPage')">No 🙈</button>
@@ -134,8 +142,7 @@
   <div id="yesPage" class="page">
     <h1>Forever Us 💍💖</h1>
     <p>
-      Falcon, you just made my heart the happiest it’s ever been.  
-      I choose you — always 💕
+      Falcon, you just made my heart the happiest it’s ever been. I choose you — always 💕
     </p>
   </div>
 
@@ -143,12 +150,12 @@
   <div id="noPage" class="page">
     <h1>Hey 😢</h1>
     <p>
-      Falcon, I’ll ask again because  
-      my heart already belongs to you 💗😉
+      Falcon, I’ll ask again because my heart already belongs to you 💗😉
     </p>
     <button onclick="goToPage('page3')">Try Again 😘</button>
   </div>
 
+  <!-- PAGE SCRIPT -->
   <script>
     function goToPage(pageId) {
       const pages = document.querySelectorAll('.page');
