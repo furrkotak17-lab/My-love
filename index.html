@@ -108,6 +108,14 @@
       max-width: 500px;
       border-radius: 20px;
     }
+
+    #loveText {
+      display: none;
+      color: #ff4f9a;
+      font-size: clamp(18px, 5vw, 45px);
+      margin-top: 20px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -147,10 +155,13 @@
 
   function showVideo() {
     document.getElementById('magicLetter').style.display = 'none';
+    document.getElementById('tapText').style.display = 'none';
+
     document.getElementById('videoBox').style.display = 'flex';
+    document.getElementById('loveText').style.display = 'block';
 
     const video = document.getElementById('magicVideo');
-    video.muted = true; // IMPORTANT: keeps background music playing
+    video.muted = true;
     video.play();
   }
 
@@ -164,7 +175,7 @@
 
 <!-- PAGE 1 -->
 <div id="page1" class="page active">
-  <h1>Happy Valentine’s Day My Loviee😘😂❤️</h1>
+  <h1>Happy Valentine’s Day My Loviee😘</h1>
   <p>I love you sooooo muchhhh 🥹💖</p>
   <button id="startBtn">Play Music & Next 💕</button>
 </div>
@@ -175,7 +186,7 @@
   <p>
     You always make me happy, ur always calm with me,
     u try to understand me a lotttt nd i love tht so much abt you🥹🫰🏻
-    mera pookie sa babu h 🥹🎀 aur hot bhi🤭
+    mera pookie sa baby h 🥹🎀 aur hot bhi🤭
   </p>
   <button onclick="goToPage('page3')">Continue 💗</button>
 </div>
@@ -214,6 +225,8 @@
       <source src="VID-20250116-WA0212.mp4" type="video/mp4">
     </video>
   </div>
+
+  <div id="loveText">i love you cutuu 😚</div>
 </div>
 
 <!-- NO PAGE -->
