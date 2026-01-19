@@ -95,6 +95,19 @@
       from { transform: scale(1); }
       to { transform: scale(1.15); }
     }
+
+    .video-container {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    video {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+    }
   </style>
 </head>
 <body>
@@ -133,8 +146,11 @@
   }
 
   function showVideo() {
+    document.getElementById('magicLetter').style.display = 'none';
+    document.getElementById('videoBox').style.display = 'flex';
+
     const video = document.getElementById('magicVideo');
-    video.style.display = 'block';
+    video.muted = true; // IMPORTANT: keeps background music playing
     video.play();
   }
 
@@ -148,7 +164,7 @@
 
 <!-- PAGE 1 -->
 <div id="page1" class="page active">
-  <h1>Happy Valentine’s Day My Loviee😘❤️</h1>
+  <h1>Happy Valentine’s Day My Loviee😘😂❤️</h1>
   <p>I love you sooooo muchhhh 🥹💖</p>
   <button id="startBtn">Play Music & Next 💕</button>
 </div>
@@ -159,7 +175,7 @@
   <p>
     You always make me happy, ur always (mostly) calm with me,
     u try to understand me a lotttt nd i love tht so much abt you🥹🫰🏻
-    mera pookie sa baby h 🥹🎀 aur hot bhi🤭
+    mera pookie sa babu h 🥹🎀 aur hot bhi🤭
   </p>
   <button onclick="goToPage('page3')">Continue 💗</button>
 </div>
@@ -183,23 +199,21 @@
     mera pyara sa cutuuu sa boyfriend h tu🥹🫰🏻
     Boht sari kisses muuuaahhhh💋💋
   </p>
-  <button onclick="goToPage('magicPage')">Tap for more 👇</button>
+  <button onclick="goToPage('magicPage')">Tap for more 🤭</button>
 </div>
 
 <!-- MAGIC PAGE -->
 <div id="magicPage" class="page">
-  <h1>lemme make ur day special</h1>
-  <div class="magic-letter" onclick="showVideo()">💌</div>
-  <p>(tap the letter)</p>
+  <h1>lemme make ur day special 🫶🏻</h1>
 
-  <video
-    id="magicVideo"
-    loop
-    controls
-    style="display:none; width:100%; max-width:500px; border-radius:20px; margin-top:20px;"
-  >
-    <source src="VID-20250116-WA0212.mp4" type="VID-20250116-WA0212.mp4">
-  </video>
+  <div id="magicLetter" class="magic-letter" onclick="showVideo()">💌</div>
+  <p id="tapText">(tap the letter)</p>
+
+  <div id="videoBox" class="video-container">
+    <video id="magicVideo" loop playsinline>
+      <source src="VID-20250116-WA0212.mp4" type="video/mp4">
+    </video>
+  </div>
 </div>
 
 <!-- NO PAGE -->
