@@ -85,18 +85,8 @@
       100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
 
-    .tap-more {
-      margin-top: 20px;
-      font-size: 4vw;
-      background: rgba(0,0,0,0.4);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 30px;
-      cursor: pointer;
-    }
-
     .magic-letter {
-      font-size: 12vw;
+      font-size: 16vw;
       cursor: pointer;
       animation: glow 1.5s infinite alternate;
     }
@@ -105,26 +95,11 @@
       from { transform: scale(1); }
       to { transform: scale(1.15); }
     }
-
-    .video-overlay {
-      position: fixed;
-      inset: 0;
-      background: black;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-    }
-
-    .video-overlay video {
-      width: 90%;
-      max-width: 500px;
-      border-radius: 20px;
-    }
   </style>
 </head>
 <body>
 
+<!-- BACKGROUND MUSIC -->
 <audio id="bgMusic" loop>
   <source src="Until I Found You - Stephen Sanchez (Piano Cover by Riyandi Kusuma).mp3" type="audio/mpeg">
 </audio>
@@ -157,9 +132,10 @@
     }
   }
 
-  function openVideo() {
-    document.getElementById('videoOverlay').style.display = 'flex';
-    document.getElementById('magicVideo').play();
+  function showVideo() {
+    const video = document.getElementById('magicVideo');
+    video.style.display = 'block';
+    video.play();
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -183,7 +159,7 @@
   <p>
     You always make me happy, ur always (mostly) calm with me,
     u try to understand me a lotttt nd i love tht so much abt you🥹🫰🏻
-    mera pookie sa babu h 🥹🎀 aur hot bhi🤭
+    mera pookie sa baby h 🥹🎀 aur hot bhi🤭
   </p>
   <button onclick="goToPage('page3')">Continue 💗</button>
 </div>
@@ -207,14 +183,23 @@
     mera pyara sa cutuuu sa boyfriend h tu🥹🫰🏻
     Boht sari kisses muuuaahhhh💋💋
   </p>
-  <div class="tap-more" onclick="goToPage('magicPage')">Tap for more 👇</div>
+  <button onclick="goToPage('magicPage')">Tap for more 👇</button>
 </div>
 
 <!-- MAGIC PAGE -->
 <div id="magicPage" class="page">
   <h1>lemme make ur day special</h1>
-  <div class="magic-letter" onclick="openVideo()">💌</div>
+  <div class="magic-letter" onclick="showVideo()">💌</div>
   <p>(tap the letter)</p>
+
+  <video
+    id="magicVideo"
+    loop
+    controls
+    style="display:none; width:100%; max-width:500px; border-radius:20px; margin-top:20px;"
+  >
+    <source src="magic-video.mp4" type="VID-20250116-WA0212.mp4">
+  </video>
 </div>
 
 <!-- NO PAGE -->
@@ -226,13 +211,6 @@
     nd Falconn u better click on yes this time😡😡
   </p>
   <button onclick="goToPage('page3')">Try again 😒😒</button>
-</div>
-
-<!-- VIDEO OVERLAY -->
-<div class="video-overlay" id="videoOverlay">
-  <video id="magicVideo" loop controls>
-    <source src="magic-video.mp4" type="video/mp4">
-  </video>
 </div>
 
 </body>
