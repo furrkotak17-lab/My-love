@@ -17,7 +17,6 @@
       align-items: center;
       text-align: center;
       position: relative;
-
       background-image: url('IMG_20260119_134104.jpg');
       background-size: cover;
       background-position: center;
@@ -25,33 +24,33 @@
     }
 
     .page {
-      display: none;
-      width: 100%;
-      padding: 20px;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       transition: opacity 0.8s ease-in-out;
       opacity: 0;
+      pointer-events: none;
+      width: 90%;
+      max-width: 600px;
       z-index: 2;
     }
 
-    .active {
-      display: block;
+    .page.active {
       opacity: 1;
+      pointer-events: auto;
     }
 
     h1 {
       color: #8b0035;
       font-weight: bold;
       margin-bottom: 20px;
-      font-size: 6vw;
+      font-size: clamp(24px, 6vw, 60px);
     }
 
     p {
       color: #ff4f9a;
-      font-size: 4vw;
+      font-size: clamp(16px, 4vw, 40px);
       margin-bottom: 25px;
       line-height: 1.4;
     }
@@ -62,7 +61,7 @@
       border: none;
       padding: 12px 24px;
       margin: 10px;
-      font-size: 4vw;
+      font-size: clamp(14px, 4vw, 30px);
       border-radius: 25px;
       cursor: pointer;
     }
@@ -85,12 +84,49 @@
       0% { transform: translateY(0) scale(1); opacity: 0.9; }
       100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
+
+    .tap-more {
+      margin-top: 20px;
+      font-size: 4vw;
+      background: rgba(0,0,0,0.4);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    .magic-letter {
+      font-size: 12vw;
+      cursor: pointer;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { transform: scale(1); }
+      to { transform: scale(1.15); }
+    }
+
+    .video-overlay {
+      position: fixed;
+      inset: 0;
+      background: black;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .video-overlay video {
+      width: 90%;
+      max-width: 500px;
+      border-radius: 20px;
+    }
   </style>
 </head>
 <body>
 
-<audio autoplay loop id="bgMusic">
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4d90d8a0e2.mp3?filename=romantic-piano-11059.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop>
+  <source src="Until I Found You - Stephen Sanchez (Piano Cover by Riyandi Kusuma).mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -103,15 +139,45 @@
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 6000);
   }
+
   let heartInterval = setInterval(createHeart, 400);
+
+  function setHeartInterval(speed) {
+    clearInterval(heartInterval);
+    heartInterval = setInterval(createHeart, speed);
+  }
+
+  function goToPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+
+    if (pageId === 'yesPage') {
+      setHeartInterval(150);
+      setTimeout(() => setHeartInterval(400), 10000);
+    }
+  }
+
+  function openVideo() {
+    document.getElementById('videoOverlay').style.display = 'flex';
+    document.getElementById('magicVideo').play();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('startBtn').addEventListener('click', () => {
+      document.getElementById('bgMusic').play().catch(() => {});
+      goToPage('page2');
+    });
+  });
 </script>
 
+<!-- PAGE 1 -->
 <div id="page1" class="page active">
-  <h1>Happy Valentine’s Day My Loviee🌟😘❤️</h1>
+  <h1>Happy Valentine’s Day My Loviee😘😂❤️</h1>
   <p>I love you sooooo muchhhh 🥹💖</p>
-  <button onclick="goToPage('page2')">Next 💕</button>
+  <button id="startBtn">Play Music & Next 💕</button>
 </div>
 
+<!-- PAGE 2 -->
 <div id="page2" class="page">
   <h1>My Babuu 😘</h1>
   <p>
@@ -122,13 +188,15 @@
   <button onclick="goToPage('page3')">Continue 💗</button>
 </div>
 
+<!-- PAGE 3 -->
 <div id="page3" class="page">
-  <h1>Ek Question🥹</h1>
+  <h1>Ek Question 🥹</h1>
   <p>Cutieee will you be my Valentine🥹🫰🏻?</p>
   <button onclick="goToPage('yesPage')">Yess babee 💘</button>
   <button onclick="goToPage('noPage')">No 😒</button>
 </div>
 
+<!-- YES PAGE -->
 <div id="yesPage" class="page">
   <h1>Good boy 😌</h1>
   <p>
@@ -139,8 +207,17 @@
     mera pyara sa cutuuu sa boyfriend h tu🥹🫰🏻
     Boht sari kisses muuuaahhhh💋💋
   </p>
+  <div class="tap-more" onclick="goToPage('magicPage')">Tap for more 👇</div>
 </div>
 
+<!-- MAGIC PAGE -->
+<div id="magicPage" class="page">
+  <h1>lemme make ur day special</h1>
+  <div class="magic-letter" onclick="openVideo()">💌</div>
+  <p>(tap the letter)</p>
+</div>
+
+<!-- NO PAGE -->
 <div id="noPage" class="page">
   <h1>Hein😡</h1>
   <p>
@@ -151,25 +228,12 @@
   <button onclick="goToPage('page3')">Try again 😒😒</button>
 </div>
 
-<script>
-  function goToPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-
-    if(pageId === 'yesPage') {
-      clearInterval(heartInterval);
-      heartInterval = setInterval(createHeart, 150);
-      setTimeout(() => {
-        clearInterval(heartInterval);
-        heartInterval = setInterval(createHeart, 400);
-      }, 10000);
-
-      const audio = document.getElementById('bgMusic');
-      audio.volume = 1;
-      setTimeout(() => audio.volume = 0.5, 5000);
-    }
-  }
-</script>
+<!-- VIDEO OVERLAY -->
+<div class="video-overlay" id="videoOverlay">
+  <video id="magicVideo" loop controls>
+    <source src="magic-video.mp4" type="video/mp4">
+  </video>
+</div>
 
 </body>
 </html>
