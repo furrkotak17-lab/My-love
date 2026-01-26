@@ -120,6 +120,55 @@
 </head>
 <body>
 
+  <!-- PASSWORD PAGE -->
+<div id="lockPage" class="page active">
+  <h1>💌 Secret Love Page 💌</h1>
+  <p>Only my Valentine can open this 🤭</p>
+
+  <input 
+    type="password" 
+    id="passwordInput" 
+    placeholder="Enter password 💖"
+    style="
+      padding: 12px;
+      border-radius: 20px;
+      border: none;
+      font-size: 18px;
+      text-align: center;
+      width: 80%;
+      max-width: 300px;
+    "
+  />
+
+  <br><br>
+
+  <button onclick="checkPassword()">Unlock ✨</button>
+
+  <p id="errorText" style="color:#8b0035; display:none;">
+    Wrong password 😮‍💨
+  </p>
+</div>
+<script>
+  const CORRECT_PASSWORD = "falcon forever";
+
+function checkPassword() {
+  const input = document
+    .getElementById("passwordInput")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const error = document.getElementById("errorText");
+
+  if (input === CORRECT_PASSWORD) {
+    document.getElementById("lockPage").classList.remove("active");
+    goToPage("page1");
+  } else {
+    error.style.display = "block";
+  }
+}
+</script>
+
 <!-- BACKGROUND MUSIC -->
 <audio id="bgMusic" loop>
   <source src="Until I Found You - Stephen Sanchez (Piano Cover by Riyandi Kusuma).mp3" type="audio/mpeg">
@@ -174,7 +223,7 @@
 </script>
 
 <!-- PAGE 1 -->
-<div id="page1" class="page active">
+<div id="page1" class="page">
   <h1>Happy Valentine’s Day My Loviee😘</h1>
   <p>I love you sooooo muchhhh falconnn🥹💖</p>
   <button id="startBtn">Play Music & Next 💕</button>
